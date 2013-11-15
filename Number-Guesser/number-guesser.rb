@@ -2,18 +2,42 @@ class Game
 
   def guess_a_numb_without_args()
     number = rand(1..100)
-
+    # puts number
+    i = 0
     while true
-      puts "Guess a number between 1-100. Type 'q' to quit"
+      puts "___________________________________________"
+      puts "Number of turns: " + "(#{i+1}) " + "*"*(i+1) 
+      i += 1
+      puts "Guess a number between 1-100. Press 'q' to quit"
       input = gets.chomp
       if input.to_i == number
-        puts "Congrats, you won! The number was #{number}."
-        break
+        puts "Congrats, you won! The number was #{number}. To play\nagain, type 'a' or type 'q' to quit"
+        inp = gets.chomp
+        if inp == "a"
+          guess_a_numb_without_args()
+        else
+          break
+        end
       elsif input == "q"
         break
       else
         puts "Nope, that wasn't it. Guess again"
-        puts "Pssst--its between #{number - 7} and #{number + 1}"
+        if (number-20..number+20).to_a.include? input.to_i
+          puts "Hint: You're warm"
+          if (number-10..number+10).to_a.include? input.to_i
+            puts "Hint: You're super warm!"
+            if (number-5..number+5).to_a.include? input.to_i
+              puts "Hint: You're HOT! Almost there..."
+            end
+          end
+        else
+          puts "Hint: You're cold"
+        end
+
+        if i == 6
+          puts "Ok, jesus, you suck at this. The number is between #{number - 10} and #{number + 7}"
+        end
+
       end
     end
   end
