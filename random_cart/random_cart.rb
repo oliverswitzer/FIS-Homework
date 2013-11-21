@@ -24,18 +24,14 @@ Item = Struct.new(:name, :price, :clearance, :coupon)
 
 
 def in_coups?(item)
+  return_val = false
   COUPS.each do |item_hash|
     if item_hash[:item] == item
-      true
-    else
-      false
+      return_val = true
     end
   end
+  return_val
 end
-
-puts in_coups? "BEER"
-puts in_coups? "CHEESE"
-puts in_coups? "AVOCADO"
 
 
 def itemify
@@ -45,7 +41,6 @@ def itemify
     item_hash.each do |item, attribute_hash|
       new_item_obj = Item.new(item, attribute_hash[:price], attribute_hash[:clearance])
       if in_coups?(item)
-        puts item
         new_item_obj.coupon = true
       end
       item_objects << new_item_obj
@@ -75,7 +70,7 @@ end
 
 
 def consolidateCart cart
-  uniq_item_list = cart.uniq  #this is a array of unique items
+  uniq_item_list = cart.uniq
   count_hash = {}  # this is to keep track of the count corresponding to each item
   uniq_item_list.each do |item|  #for each item on the unique list
     count = cart.select {|hash_items| hash_items == item}.size   #set count = to the size of a select statement
@@ -90,22 +85,30 @@ def consolidateCart cart
 end
 
 
-def on_clearance? item_input
+def on_clearance?(item_input)
+  return_val = false
   ITEM_OBJECTS.each do |item|
     if item.name == item_input
-      item.clearance
+      return_val = item.clearance
     end
   end
+  return_val
 end
-
-puts on_clearance?("AVOCADO")
 
 
 def clearance_discount item_price
   item_price - item_price*0.20
 end
 
-
+def two_coupons?(item, coup_array)
+  return_val = false
+  coup_array.each do |coupon_hash|
+    if coupon_hash[:item] == item && coupon_hash[:num] >= 2
+      return_val = true
+    end
+  end
+  return_val
+end
 
 def checkout cart
   total = 0
@@ -121,7 +124,7 @@ def checkout cart
   end
 end
 
-
+ap generateCoups
 
 # [
 #     [0] {

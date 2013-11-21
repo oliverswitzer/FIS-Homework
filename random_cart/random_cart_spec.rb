@@ -38,3 +38,40 @@ describe "#clearance_discount" do
   
 end
 
+describe "#on_clearance?" do
+
+  it "should return true if the item its checking is on clearance" do
+    expect(on_clearance?("AVOCADO")).to eq(true)
+  end
+  
+end
+
+describe "#two_coupons" do
+  test_coups = [
+                 {
+                  :item => "BEER",
+                  :num => 2,
+                  :cost => 20.0
+                  },
+
+                  {
+                  :item => "ALMONDS",
+                  :num => 1,
+                  :cost => 10
+                  }
+                ]
+
+  it "should return true if an item which is inputted has more than two coupons" do
+    expect(two_coupons?("BEER", test_coups)).to eq(true)
+  end
+  it "should return false if the item doesn't have two or more coupons" do
+    expect(two_coupons?("ALMONDS", test_coups)).to eq(false)
+  end
+
+
+end
+
+
+
+
+
