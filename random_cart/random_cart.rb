@@ -18,9 +18,44 @@ COUPS = [  {:item=>"AVOCADO", :num=>2, :cost=>5.00},
           {:item=>"BEER", :num=>2, :cost=>20.00},
           {:item=>"CHEESE", :num=>3, :cost=>15.00}]
 
-# ap ITEMS
-# ap COUPS
-#randomly generates a cart of items
+
+
+Item = Struct.new(:name, :price, :clearance, :coupon)
+
+
+def in_coups?(item)
+  COUPS.each do |item_hash|
+    if item_hash[:item] == item
+      true
+    else
+      false
+    end
+  end
+end
+
+puts in_coups? "BEER"
+puts in_coups? "CHEESE"
+puts in_coups? "AVOCADO"
+
+
+def itemify
+  item_objects = []
+
+  ITEMS.each do |item_hash|
+    item_hash.each do |item, attribute_hash|
+      new_item_obj = Item.new(item, attribute_hash[:price], attribute_hash[:clearance])
+      if in_coups?(item)
+        puts item
+        new_item_obj.coupon = true
+      end
+      item_objects << new_item_obj
+    end
+  end
+  item_objects
+end
+
+ITEM_OBJECTS = itemify  #AN ARRAY OF ITEM OBJECTS
+
 def generateCart
   cart = []
   rand(20).times do
@@ -43,53 +78,50 @@ def consolidateCart cart
   uniq_item_list = cart.uniq  #this is a array of unique items
   count_hash = {}  # this is to keep track of the count corresponding to each item
   uniq_item_list.each do |item|  #for each item on the unique list
-     count = cart.select {|hash_items| hash_items == item}.size   #set count = to the size of a select statement
-     count_hash[item] = count                                     #on the original cart
-   end
-   uniq_cart = cart.uniq   #wipe out duplicates in the cart
-   uniq_cart.each do |item_hash|   #for each item in the unique cart
+    count = cart.select {|hash_items| hash_items == item}.size   #set count = to the size of a select statement
+    count_hash[item] = count                                     #on the original cart
+  end
+  uniq_cart = cart.uniq   #wipe out duplicates in the cart
+  
+  uniq_cart.each do |item_hash|   #for each item in the unique cart
     item_hash[:count] = count_hash[item_hash]   #add a key :count which has a value pulled from our count_hash
   end
   uniq_cart #return our uniq grocery cart!
 end
 
 
-rand_cart = [  
-              {  "AVOCADO" => {:price => 3.00, :clearance => true}  }, 
-              {  "AVOCADO" => {:price => 3.00, :clearance => true}  },
-              {  "AVOCADO" => {:price => 3.00, :clearance => true}  }, 
-              {  "AVOCADO" => {:price => 3.00, :clearance => true}  },
-              {  "ALMONDS" => {:price => 3.00, :clearance => true}  }
-            ]
+def on_clearance? item_input
+  ITEM_OBJECTS.each do |item|
+    if item.name == item_input
+      item.clearance
+    end
+  end
+end
 
-ap consolidateCart(rand_cart)
-
+puts on_clearance?("AVOCADO")
 
 
 def clearance_discount item_price
   item_price - item_price*0.20
 end
 
-def in_coups?(item)
-  COUPS.each do |item_hash|
-    if item_hash[:item] == item
-      return true
-    else
-      return false
-    end
-  end
-end
+
 
 def checkout cart
   total = 0
 
   cart.each do |item_hash|
     item_hash.each do |item_and_count, attribute_hash|
-      attribute_hash.each do |attribute, value|
+      if item_and_count.in_coups?
+        attribute_hash.each do |attribute, value|
+
+        end
       end
     end
   end
 end
+
+
 
 # [
 #     [0] {

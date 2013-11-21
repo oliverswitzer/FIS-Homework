@@ -19,3 +19,22 @@ describe "#consolidateCart" do
   end
   
 end
+
+
+describe "#in_coups?" do
+
+  it "should return true if item is in COUPS and false if isnt" do
+    expect(in_coups?("AVOCADO")).to eq(true)
+    expect(in_coups?("ALMONDS")).to eq(false)
+  end
+  
+end
+
+describe "#clearance_discount" do
+
+  it "should return the discounted price (20% off) for an item on clearance" do
+    expect(clearance_discount(100)).to eq(80)
+  end
+  
+end
+
