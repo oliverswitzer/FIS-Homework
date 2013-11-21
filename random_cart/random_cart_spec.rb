@@ -32,8 +32,8 @@ end
 
 describe "#clearance_discount" do
 
-  it "should return the discounted price (20% off) for an item on clearance" do
-    expect(clearance_discount(100)).to eq(80)
+  it "should return the discounted price for an item on clearance if given item and discount" do
+    expect(clearance_discount("AVOCADO", 0.2)).to eq(2.4)
   end
   
 end
@@ -67,9 +67,9 @@ describe "#two_coupons" do
   it "should return false if the item doesn't have two or more coupons" do
     expect(two_coupons?("ALMONDS", test_coups)).to eq(false)
   end
-
-
 end
+
+
 
 
 

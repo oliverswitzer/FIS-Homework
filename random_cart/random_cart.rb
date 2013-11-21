@@ -51,6 +51,7 @@ end
 
 ITEM_OBJECTS = itemify  #AN ARRAY OF ITEM OBJECTS
 
+
 def generateCart
   cart = []
   rand(20).times do
@@ -96,9 +97,12 @@ def on_clearance?(item_input)
 end
 
 
-def clearance_discount item_price
-  item_price - item_price*0.20
+def clearance_discount item, discount_ratio
+  discounted_item_array = ITEM_OBJECTS.select {|item_obj| item_obj.name == item}
+  discounted_item = discounted_item_array[0]
+  discounted_item.price - discounted_item.price * discount_ratio
 end
+
 
 def two_coupons?(item, coup_array)
   return_val = false
@@ -123,8 +127,6 @@ def checkout cart
     end
   end
 end
-
-ap generateCoups
 
 # [
 #     [0] {
