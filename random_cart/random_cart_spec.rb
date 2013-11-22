@@ -32,7 +32,8 @@ end
 
 describe "#clearance_discount" do
 
-  it "should return the discounted price for an item on clearance if given item and discount" do
+  it "should return the discounted price for an item on clearance 
+  if given item and discount" do
     expect(clearance_discount("AVOCADO", 0.2)).to eq(2.4)
   end
   
@@ -46,7 +47,7 @@ describe "#on_clearance?" do
   
 end
 
-describe "#two_coupons" do
+describe "#two_coupons?" do
   test_coups = [
                  {
                   :item => "BEER",
@@ -61,13 +62,25 @@ describe "#two_coupons" do
                   }
                 ]
 
-  it "should return true if an item which is inputted has more than two coupons" do
+  it "should return true if an item which is inputted has 
+  more than two coupons" do
     expect(two_coupons?("BEER", test_coups)).to eq(true)
   end
   it "should return false if the item doesn't have two or more coupons" do
     expect(two_coupons?("ALMONDS", test_coups)).to eq(false)
   end
 end
+
+describe "#coup_discount" do
+
+  it "should return the correct price of the item(s) when coupon is applied" do 
+    expect(coup_discount("AVOCADO", 2)).to eq(5.0)
+    expect(coup_discount("AVOCADO", 3)).to eq(5.0 + 3.0)
+    expect(coup_discount("CHEESE", 6)).to eq(15.0 + 15.0)
+  end
+end
+
+
 
 
 
