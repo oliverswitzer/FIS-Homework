@@ -80,6 +80,40 @@ describe "#coup_discount" do
   end
 end
 
+# describe "#checkout" do 
+  
+#   cart = [
+#        {
+#         "AVOCADO" => {
+#                 :price => 3.0,
+#             :clearance => true
+#         },
+#            :count => 2
+#     },
+#        {
+#         "CHEESE" => {
+#                 :price => 6.5,
+#             :clearance => false
+#         },
+#           :count => 1
+#     }
+# ]
+
+# coupons = [
+#        {
+#         :item => "AVOCADO",
+#          :num => 2,
+#         :cost => 5.0
+#      }
+# ]
+
+#   coupons = generateCoups
+
+#   it "should return the total price for a cart of items with all coupons and clearances applied" do 
+#     expect(checkout(cart, coupons)).to eq(11.50)
+#   end
+# end
+
 
 
 

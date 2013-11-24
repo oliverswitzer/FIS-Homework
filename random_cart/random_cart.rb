@@ -132,44 +132,77 @@ def checkout(cart, coupons)
   num_total = 0
   total = []
   cart.each do |item_hash|
-    debugger
+    # debugger
 
     item_hash.each do |item_and_count, attribute_hash|
-      debugger
+      # debugger
       if item_and_count.class == String
-        debugger
+        # debugger
         attribute_hash.each do |attribute, value|
-          debugger
+          # debugger
           if on_clearance?(item_and_count)
-            debugger
+            debugger 
+            puts "1"
             if in_coups?(item_and_count) && two_coupons?(item_and_count, coupons)
-              debugger
+              debugger 
+              puts "2"
               clearance_price_for_one_item = clearance_discount(item_and_count, 0.60)
               total << clearance_price_for_one_item*item_hash[:count]
+              debugger 
+              puts ""
+            elsif 
+              total << coup_discount(item_and_count, item_hash[:count])
+              debugger
+              puts "3"
             end
-          else
-            debugger
             clearance_price_for_one_item = clearance_discount(item_and_count, 0.20)
             clearance_price_for_one_item
-            debugger
             total << clearance_price_for_one_item*item_hash[:count]
-            debugger
-            puts
+          else
+            # debugger
+            if attribute == :price
+              total << value*item_hash[:count]
+            end
           end
         end
       end
     end
   end
+  num_total = total.inject {|sum, item_price| sum + item_price} 
   discount = total.all? {|item_price| item_price < 5.0}
   if discount
-    num_total = total.inject {|sum, item_price| sum + item_price} 
+    num_total*0.90
+  else
+    num_total
   end
-  num_total
 end
 
-cart = consolidateCart(generateCart)
+ cart = [
+       {
+        "AVOCADO" => {
+                :price => 3.0,
+            :clearance => true
+        },
+           :count => 2
+    },
+       {
+        "CHEESE" => {
+                :price => 6.5,
+            :clearance => false
+        },
+          :count => 1
+    }
+]
 ap cart
-puts checkout(cart, generateCoups)
+coups = [
+       {
+        :item => "AVOCADO",
+         :num => 2,
+        :cost => 5.0
+     }
+]
+ap coups
+puts checkout(cart, coups)
 
 # checkout(generateCart)
 
